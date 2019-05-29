@@ -31,8 +31,8 @@ namespace Chatter.DAL.Migrations
                     Gender = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    Salt = table.Column<string>(nullable: true),
+                    Password = table.Column<byte[]>(nullable: true),
+                    Salt = table.Column<byte[]>(nullable: true),
                     RegistrationDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
