@@ -1,0 +1,150 @@
+﻿<UserControl x:Class="Chatter.Views.Controls.NewPost"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chatter.Views.Controls"
+             xmlns:wpf="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             DataContext="{Binding Source={StaticResource VMLocator}, Path=NewPostVM}"
+             d:DesignWidth="300">
+
+    <Border Padding="5">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Visibility="{Binding ShowError, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <TextBlock Text="{Binding ErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                           Grid.Row="0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="12" 
+                           Foreground="Red"
+                           Grid.Column="0" 
+                           FontWeight="Bold"/>
+            </Grid>
+
+            <Border Padding="0" 
+                    Grid.Row="2"
+                    Margin="1"
+                    Background="white">
+
+                <Grid Height="25">
+
+                    <TextBox TextWrapping="WrapWithOverflow"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto"
+                             FontWeight="Medium"
+                             VerticalContentAlignment="Center"
+                             Height="27"
+                             BorderBrush="Transparent"
+                             Text="{Binding Post.PostHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
+                             Padding="2 0 0 0"
+                             FontSize="13"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="4">
+
+                <wpf:RichTextBox BorderBrush="Transparent"
+                                 Background="white"
+                                 Text="{Binding Post.Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
+                                 Height="70">
+
+                    <wpf:RichTextBox.InputBindings>
+                        
+                        <KeyBinding Key="Return"
+                                    Modifiers="Ctrl"
+                                    Command="{Binding NewPostCommand}"/>
+                        
+                    </wpf:RichTextBox.InputBindings>
+                    
+                </wpf:RichTextBox>
+                
+            </Grid>
+
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button Background="Transparent" 
+                            BorderThickness="0"
+                            Visibility="Collapsed"
+                            Width="25">
+                        
+                        <StackPanel Orientation="Horizontal">
+                            
+                            <Image Source="/Chatter;component/Images/Icons/picture.png" 
+                                   Stretch="Uniform" 
+                                   Height="19" 
+                                   Width="19" />
+                            
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Background="Transparent" 
+                            BorderThickness="0"
+                            Visibility="Collapsed"
+                            Width="25">
+                        
+                        <StackPanel Orientation="Horizontal">
+                            
+                            <Image Source="/Chatter;component/Images/Icons/file2.png" 
+                                   Stretch="Uniform" 
+                                   Height="19" 
+                                   Width="19" />
+                            
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Background="Transparent" 
+                            BorderThickness="0"
+                            Width="25"
+                            Visibility="Collapsed">
+                        
+                        <StackPanel Orientation="Horizontal">
+                            
+                            <Image Source="/Chatter;component/Images/Icons/file.png" 
+                                   Stretch="Uniform" 
+                                   Height="15" 
+                                   Width="15"/>
+                            
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                
+                <Button Grid.Column="2" 
+                        Background="Transparent" 
+                        BorderThickness="0"
+                        Width="25"
+                        Command="{Binding NewPostCommand}">
+                    
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <Image Source="/Chatter;component/Images/Icons/send.png" 
+                               Stretch="Uniform" 
+                               Height="15" 
+                               Width="15" />
+                        
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+    </Border>
+
+</UserControl>

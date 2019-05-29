@@ -1,0 +1,499 @@
+﻿<UserControl x:Class="Chatter.Views.Controls.Post"
+             Name="userControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wpf="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:Chatter.Views.Controls"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d" 
+             d:DesignWidth="300">
+
+    <Border Padding="0 0 5 0">
+        
+        <Grid Margin="10 5 5 5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="2" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <Border VerticalAlignment="Top"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Margin="0 0 0 0"
+                    HorizontalAlignment="Left"
+                    CornerRadius="40"
+                    Height="40"
+                    Width="40">
+
+                <Border.Background>
+                    <MultiBinding Converter="{StaticResource MessageBackgroundConverter}"
+                                  ConverterParameter="Icon">
+
+                        <Binding Path="Tag" 
+                                 RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                        <Binding Path="PostData.User"
+                                 RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                    </MultiBinding>
+                </Border.Background>
+
+                <TextBlock Text="{Binding PostData.User.Username, Converter={StaticResource StringToInitialsConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           Foreground="White"/>
+
+            </Border>
+
+            <Grid Grid.Column="2"
+                  Grid.Row="0"
+                  HorizontalAlignment="Stretch">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Padding="5" 
+                        Width="auto">
+
+                    <Border.Background>
+
+                        <MultiBinding Converter="{StaticResource MessageBackgroundConverter}"
+                                      ConverterParameter="Content">
+
+                            <Binding Path="Tag" 
+                                 RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                            <Binding Path="PostData.User"
+                                 RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                        </MultiBinding>
+                    </Border.Background>
+
+                    <Grid Margin="5 0 10 0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto"/>
+
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="2" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0" 
+                              HorizontalAlignment="Left">
+
+                                <TextBox IsReadOnly="True"
+                                     BorderThickness="0"
+                                     FontSize="14"
+                                     Background="Transparent"
+                                     FontWeight="Bold"
+                                     Text="{Binding PostData.User.Username, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}},Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+
+                            <Grid Grid.Column="2" 
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Bottom">
+
+                                <TextBlock Text="{Binding PostData.DateTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}},Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" 
+                                       FontSize="12" />
+                            </Grid>
+
+                        </Grid>
+
+                        <Grid Grid.Row="2"
+                              HorizontalAlignment="Stretch">
+
+                            <TextBox VerticalAlignment="Center" 
+                                     IsReadOnly="True"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     FontWeight="Bold"
+                                     FontSize="14"
+                                     Foreground="Black"
+                                     AcceptsReturn="True"
+                                     HorizontalAlignment="Left"
+                                     Text="{Binding PostData.PostHeader, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}}"/>
+
+                        </Grid>
+
+                        <Grid Grid.Row="3"
+                              HorizontalAlignment="Stretch">
+
+                            <wpf:RichTextBox VerticalAlignment="Center" 
+                                             IsReadOnly="True"
+                                             Background="Transparent"
+                                             BorderThickness="0"
+                                             FontSize="12"
+                                             Foreground="Black"
+                                             AcceptsReturn="True"
+                                             HorizontalAlignment="Left"
+                                             Text="{Binding PostData.Content, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}}"/>
+
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- comments -->
+
+            <ListView Grid.Column="2"
+                      Grid.Row="2"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      ItemsSource="{Binding DataContext.CommentsList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}},Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+
+                        <Setter Property="HorizontalContentAlignment" 
+                                Value="Stretch" />
+
+                        <Setter Property="Background" 
+                                Value="#F1F1F2" />
+
+                        <Setter Property="BorderThickness" 
+                                Value="0" />
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded" >
+                        <i:InvokeCommandAction Command="{Binding DataContext.ListViewInitCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                               CommandParameter="{Binding PostData, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="#F1F1F2">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+
+                            <Border VerticalAlignment="Top"
+                                    Grid.Column="0"
+                                    BorderBrush="#F1F1F2"
+                                    Margin="5 5 0 0"
+                                    HorizontalAlignment="Left"
+                                    CornerRadius="40"
+                                    Height="35"
+                                    Width="35">
+
+                                <Border.Background>
+                                    <MultiBinding Converter="{StaticResource MessageBackgroundConverter}"
+                                                  ConverterParameter="Icon">
+
+                                        <Binding Path="User"/>
+
+                                        <Binding Path="PostData.User"
+                                                 RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                                    </MultiBinding>
+                                </Border.Background>
+
+                                <TextBlock Text="{Binding User.Username, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToInitialsConverter}}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           FontSize="20"
+                                           Foreground="White" />
+
+                            </Border>
+
+                            <Border Padding="5"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Stretch">
+
+                                <Border.Background>
+                                    <MultiBinding Converter="{StaticResource MessageBackgroundConverter}"
+                                                      ConverterParameter="Content">
+
+                                        <Binding Path="User"/>
+
+                                        <Binding Path="PostData.User"
+                                                     RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                                    </MultiBinding>
+                                </Border.Background>
+
+                                <Grid Margin="5 0 10 0">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="2" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0" 
+                                              HorizontalAlignment="Left">
+                                            
+                                            <TextBox IsReadOnly="True"
+                                                         BorderThickness="0"
+                                                         FontSize="14"
+                                                         Background="Transparent"
+                                                         FontWeight="Bold"
+                                                         Text="{Binding User.Username, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                         HorizontalAlignment="Right" />
+                                        </Grid>
+
+
+                                        <Grid Grid.Column="2" 
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Bottom">
+
+                                            <TextBlock Text="{Binding DateTime, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" 
+                                                FontSize="12" />
+                                        </Grid>
+
+                                    </Grid>
+
+                                    <Grid Grid.Row="2"
+                                          HorizontalAlignment="Stretch">
+
+                                        <wpf:RichTextBox Background="Transparent"
+                                                         FontSize="12"
+                                                         BorderThickness="0" 
+                                                         VerticalAlignment="Center" 
+                                                         IsReadOnly="True"
+                                                         HorizontalContentAlignment="Stretch"
+                                                         Foreground="Black"
+                                                         Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
+                                                         AcceptsReturn="True"
+                                                         HorizontalAlignment="Stretch"
+                                                         Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <!-- button replay -->
+
+            <Grid Grid.Column="2" 
+                  Visibility="{Binding DataContext.ShowReply, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InvertVisibilityConverter}}"
+                  Grid.Row="3" 
+                  Width="auto"
+                  Height="auto" 
+                  Margin="0 0 0 0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="46" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="1" 
+                      Background="White"
+                      HorizontalAlignment="Stretch">
+                    
+                    <Button BorderBrush="Transparent"
+                            Background="Transparent"
+                            FontWeight="Medium"
+                            Margin="14 0 0 0"
+                            FontSize="12"
+                            Height="20"
+                            Content="Reply"
+                            HorizontalAlignment="Left"
+                            Command="{Binding DataContext.AddReplyCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}},Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </Grid>
+            
+            <!-- replay = text editor -->
+
+            <Grid Grid.Column="2" 
+                  Visibility="{Binding DataContext.ShowReply, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}},Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                  Grid.Row="3" 
+                  Width="auto"
+                  Height="auto" 
+                  Margin="0 0 0 0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="6" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+
+                <Border VerticalAlignment="Top"
+                        Grid.Column="0"
+                        Margin="5 5 0 0"
+                        HorizontalAlignment="Left"
+                        CornerRadius="40"
+                        Height="35"
+                        Width="35">
+
+                    <Border.Background>
+                        <MultiBinding Converter="{StaticResource MessageBackgroundConverter}"
+                                  ConverterParameter="Icon">
+
+                            <Binding Path="Tag" 
+                                 RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                            <Binding Path="PostData.User"
+                                 RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                        </MultiBinding>
+                    </Border.Background>
+
+                    <TextBlock Text="{Binding DataContext.NewComment.User.Username, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToInitialsConverter}}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="20"
+                               Foreground="White" />
+
+                </Border>
+
+                <Grid Grid.Column="2"
+                      Grid.Row="0"
+                      HorizontalAlignment="Stretch">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Padding="5">
+
+                        <Border.Background>
+                            <MultiBinding Converter="{StaticResource MessageBackgroundConverter}"
+                                          ConverterParameter="Content">
+                                
+                                <Binding Path="Tag" 
+                                         RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+                                
+                                <Binding Path="PostData.User"
+                                         RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:Post}}"/>
+
+                            </MultiBinding>
+                        </Border.Background>
+
+                        <Grid Margin="5 0 10 0">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="2" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" 
+                                      HorizontalAlignment="Left">
+
+                                    <TextBox IsReadOnly="True"
+                                             BorderThickness="0"
+                                             FontSize="10"
+                                             Background="Transparent"
+                                             FontWeight="Bold"
+                                             Text="{Binding DataContext.NewComment.User.Username, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             HorizontalAlignment="Right" />
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid Grid.Row="3">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="25" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0"
+                                      HorizontalAlignment="Stretch">
+
+                                    <wpf:RichTextBox VerticalAlignment="Center"
+                                                     Background="Transparent"
+                                                     BorderThickness="0.5"
+                                                     Height="35"
+                                                     FontSize="12"
+                                                     Foreground="Black"
+                                                     HorizontalAlignment="Left"
+                                                     Text="{Binding DataContext.NewComment.Content, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                                        <wpf:RichTextBox.InputBindings>
+
+                                            <KeyBinding Key="Return"
+                                                        Modifiers="Ctrl"
+                                                        Command="{Binding DataContext.AddCommentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}}"/>
+
+                                        </wpf:RichTextBox.InputBindings>
+
+                                    </wpf:RichTextBox>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+
+                                    <Button Grid.Column="2" 
+                                            Background="Transparent" 
+                                            BorderThickness="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom"
+                                            Width="25"
+                                            Command="{Binding DataContext.AddCommentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Post}}}">
+
+                                        <Image Source="/Chatter;component/Images/Icons/send.png" 
+                                                   Stretch="Uniform" 
+                                                   Height="18" 
+                                                   Width="18" />
+                                    </Button>
+
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

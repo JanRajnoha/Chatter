@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="Chatter.Views.Controls.SideMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chatter.Views.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="60.667" 
+             DataContext="{Binding Source={StaticResource VMLocator}, Path=SideMenuVM}"
+             d:DesignWidth="300">
+
+
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <Grid>
+
+                <Border Background="White">
+
+                    <!-- Top menu -->
+
+                    <Grid Height="40" Background="#1995AD">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Background="Transparent" 
+                                        Visibility="Collapsed"
+                                        BorderThickness="0"
+                                        Width="40">
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Chatter;component/Images/Icons/bell.png" 
+                                               Stretch="Uniform" 
+                                               Height="25" 
+                                               Width="25" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Background="Transparent" 
+                                        BorderThickness="0"
+                                    Command="{Binding ShowOrganizationListCommand}"
+                                        Width="40">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Chatter;component/Images/Icons/chat.png" 
+                                               Stretch="Uniform" 
+                                               Height="25" 
+                                               Width="25" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Background="Transparent" 
+                                        BorderThickness="0"
+                                    Command="{Binding ShowUserListCommand}"
+                                        Width="40">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Chatter;component/Images/Icons/teams.png" 
+                                               Stretch="Uniform" 
+                                               Height="25" 
+                                               Width="25" />
+                                </StackPanel>
+                            </Button>
+
+
+                            <Button Background="Transparent" 
+                                        BorderThickness="0"
+                                        Width="40"
+                                    Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Chatter;component/Images/Icons/file.png" 
+                                               Stretch="Uniform" 
+                                               Height="25" 
+                                               Width="25" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                        <Button Grid.Column="2" 
+                                    Padding="0 0 0 0"
+                                    Width="40"
+                                    Background="Transparent"
+                                    Command="{Binding ShowGroupDetailCommand}"
+                                    BorderThickness="0">
+
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Chatter;component/Images/Icons/setup.png" 
+                                               Stretch="Uniform" 
+                                               Height="25" 
+                                               Width="25" />
+                            </StackPanel>
+                            
+                            <Button.ContextMenu>
+                                <ContextMenu>
+
+                                    <MenuItem Header="Organization detail"
+                                          Command="{Binding ShowOrganizationDetailCommand}"/>
+
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Template>
+   
+</UserControl>

@@ -1,0 +1,104 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chatter.Views.Controls"
+        xmlns:Group="clr-namespace:Chatter.BL.DTO.Group;assembly=Chatter.BL" x:Class="Chatter.Views.Controls.Window1"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800">
+
+    <Grid Background="White"
+                                      Height="auto">
+
+        <Grid.ColumnDefinitions>
+            <!-- <ColumnDefinition Width="5" /> -->
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- <Border Background="Red" Width="5" /> -->
+
+        
+
+        <Grid Grid.Column="1">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <ListView Grid.Row="3"
+                          BorderBrush="{x:Null}"
+                          Background="{x:Null}"
+                          Cursor="Hand"
+                          SelectedItem="{Binding DataContext.SelectedGroup, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+
+
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+
+                            <Setter Property="Height" 
+                                    Value="18" />
+
+                            <Setter Property="VerticalContentAlignment" 
+                                    Value="Center" />
+
+                            <Setter Property="Background"
+                                    Value="Transparent" />
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <Group:GroupDetailModelDTO Name="test"/>
+
+                </ListView>
+
+                <Grid Grid.Row="1" 
+                      Grid.Column="0"
+                      HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                           FontSize="17" 
+                                                           FontWeight="Bold"
+                                                           Foreground="#02949d" />
+                </Grid>
+
+                <Grid Grid.Row="1" 
+                      Grid.Column="1"
+                      HorizontalAlignment="Right">
+                    
+                    <Button Background="Transparent" 
+                            BorderThickness="0"
+                            Width="40">
+                        
+                        <Image Source="/Chatter;component/Images/Icons/file.png" 
+                               Stretch="Uniform" 
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Height="15" 
+                               Width="15" />
+                    </Button>
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,187 @@
+﻿<UserControl x:Class="Chatter.Views.Controls.Register"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chatter.Views.Controls"
+             xmlns:w="clr-namespace:Chatter.Controls"
+             mc:Ignorable="d" 
+             DataContext="{Binding Source={StaticResource VMLocator}, Path=RegisterVM}"
+             d:DesignHeight="204.176" 
+             d:DesignWidth="251.333"
+             MinWidth="350">
+
+    <Grid Background="#BCBABE" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Personal Registration"
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center" 
+               FontWeight="Bold" 
+               FontSize="20"
+               Grid.Row="1"/>
+
+        <Grid Grid.Row="2"
+              Margin="0 5 0 5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Name"
+                   Grid.Row="0"
+                   Margin="0 0 5 0" 
+                   Grid.Column="1"/>
+
+            <TextBox Text="{Binding Data.User.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     BorderThickness="0"
+                     x:Name="Login"
+                     Margin="0 2 0 2"
+                     VerticalContentAlignment="Center"
+                     Grid.Row="0"
+                     Grid.Column="3">
+
+                <TextBox.InputBindings>
+                    
+                    <KeyBinding Key="Return"
+                                Command="{Binding RegisterCommand}"
+                                CommandParameter="{Binding Data}"/>
+                    
+                </TextBox.InputBindings>
+            </TextBox>
+
+            <Label Content="Your E-Mail" 
+                   HorizontalAlignment="Left"
+                   Height="26"
+                   Grid.Row="1"
+                   Grid.Column="1" />
+
+            <TextBox Text="{Binding Data.User.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     BorderThickness="0"
+                     Margin="0 2 0 2"
+                     VerticalContentAlignment="Center"
+                     Grid.Row="1"
+                     Grid.Column="3">
+
+                <TextBox.InputBindings>
+
+                    <KeyBinding Key="Return"
+                                Command="{Binding RegisterCommand}"
+                                CommandParameter="{Binding Data}"/>
+
+                </TextBox.InputBindings>
+            </TextBox>
+
+            <Label Content="Password" 
+                   Height="26"
+                   Margin="0 0 5 0" 
+                   Grid.Column="1"
+                   Grid.Row="2"/>
+
+            <PasswordBox w:PasswordHelper.Attach="True" 
+                         w:PasswordHelper.Password="{Binding Data.User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         BorderThickness="0"
+                         VerticalContentAlignment="Center"
+                         Margin="0 2 0 2"
+                         Grid.Row="2"
+                         Grid.Column="3">
+
+                <PasswordBox.InputBindings>
+
+                    <KeyBinding Key="Return"
+                                Command="{Binding RegisterCommand}"
+                                CommandParameter="{Binding Data}"/>
+
+                </PasswordBox.InputBindings>
+            </PasswordBox>
+
+                <Label Content="Confirm Password" 
+                   Height="26"
+                   Grid.Row="3"
+                   Grid.Column="1"/>
+
+            <PasswordBox w:PasswordHelper.Attach="True" 
+                         w:PasswordHelper.Password="{Binding Data.PassAgain, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         BorderThickness="0" 
+                         VerticalContentAlignment="Center"
+                         Margin="0 2 0 2"
+                         Grid.Row="3"
+                         Grid.Column="3">
+
+                <PasswordBox.InputBindings>
+
+                    <KeyBinding Key="Return"
+                                Command="{Binding RegisterCommand}"
+                                CommandParameter="{Binding Data}"/>
+
+                </PasswordBox.InputBindings>
+            </PasswordBox>
+
+        </Grid>
+
+        <Grid Grid.Row="3"
+              Margin="0 0 0 0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Register"
+                    BorderThickness="0" 
+                    Background="#A1D6E2" 
+                    Margin="5 0 5 0"
+                    Height="20"
+                    Grid.Column="1"
+                    Command="{Binding RegisterCommand}"
+                    CommandParameter="{Binding Data}"/>
+
+            <Button Content="Sign in"
+                    BorderThickness="0"
+                    Background="#A1D6E2"
+                    Height="20"
+                    Margin="0 0 5 0"
+                    Grid.Column="2"
+                    Command="{Binding LoginCommand}"/>
+            
+            
+
+        </Grid>
+
+        <Grid Grid.Row="5"
+              Visibility="{Binding ShowError, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+            <TextBlock Text="{Binding ErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       FontSize="12" 
+                       Foreground="Red"
+                       Grid.Column="1" 
+                       FontWeight="Bold"
+                       Visibility="Visible"/>
+        </Grid>
+    </Grid>
+    
+</UserControl>

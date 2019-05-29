@@ -1,0 +1,462 @@
+﻿<Window x:Class="Chatter.Views.ChatPage"
+        x:Name="window"
+        xmlns:Controls="clr-namespace:Chatter.Views.Controls" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:local="clr-namespace:Chatter"
+        mc:Ignorable="d"
+        Icon="../Images/chatter_logo_use.png"
+        Title="Chatter" 
+        Height="650" 
+        Width="1150" 
+        MinHeight="650"
+        MinWidth="1150"
+        DataContext="{Binding Source={StaticResource VMLocator}, Path=ChatPageVM}"
+        WindowStartupLocation="CenterScreen">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing" >
+            <i:InvokeCommandAction Command="{Binding DataContext.CloseCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="Loaded" >
+            <i:InvokeCommandAction Command="{Binding DataContext.ContextChangedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Background="#F1F1F2" 
+          Visibility="Visible">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="1" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" 
+                  Background="#1995AD">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+
+                    <TextBlock FontSize="15"
+                               Grid.Column="1"
+                               Text="{Binding Header, Mode=OneWay}"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               VerticalAlignment="Center"
+                               Padding="0 0 0 0"/>
+
+                    <TextBlock Text="{Binding Description, Mode=OneWay}"
+                               FontSize="15" 
+                               Grid.Column="2"
+                               FontWeight="Light"
+                               VerticalAlignment="Center"
+                               Foreground="White"/>
+
+                    <Button Background="Transparent" 
+                            BorderThickness="0"
+                            Width="40"
+                            Grid.Column="4"
+                            Height="40"
+                            Command="{Binding ShowProfileCommand}">
+                        
+                        <Controls:UserIcon Height="30"
+                                           Width="30"
+                                           Text="{Binding DataContext.User.Username, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToInitialsConverter}}"/>
+                        
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                
+                                <MenuItem Header="Log out"
+                                          Command="{Binding LogOutCommand}"
+                                          CommandParameter="{Binding User}"/>
+
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  Visibility="{Binding ShowChat, UpdateSourceTrigger=PropertyChanged}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              Grid.Row="0">
+
+                    <Controls:PostsList/>
+                    
+                </ScrollViewer>
+
+                <Grid Grid.Row="1" 
+                      VerticalAlignment="Bottom"
+                      Background="#F1F1F2">
+                    
+                    <Border Padding="0">
+                        
+                        <Controls:NewPost VerticalAlignment="Bottom"/>
+                        
+                    </Border>                    
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" 
+                  Visibility="{Binding ShowProfile, UpdateSourceTrigger=PropertyChanged}"
+                  VerticalAlignment="Top">
+
+                <Controls:UserDetail />
+
+            </Grid>
+
+            <Grid Grid.Row="1" 
+                  Visibility="{Binding ShowOrganization, UpdateSourceTrigger=PropertyChanged}"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Left">
+
+                <Controls:OrganisationDetail />
+
+            </Grid>
+
+            <Grid Grid.Row="1" 
+                  Visibility="{Binding ShowTeam, UpdateSourceTrigger=PropertyChanged}"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Left">
+
+                <Controls:GroupDetail />
+
+            </Grid>
+
+        </Grid>
+        
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Controls:SideMenu/>
+
+            <Grid Grid.Row="1"
+                  Background="White"
+                  Visibility="{Binding ShowOrganizationList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button BorderBrush="{x:Null}" 
+                        Background="{x:Null}"
+                        HorizontalContentAlignment="Left"
+                        Height="50"
+                        Command="{Binding AddOrganizationCommand}">
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="1">
+
+                            <Border Background="#FF6B6B6B" 
+                                    Width="40"
+                                    Height="40"                                    
+                                    CornerRadius="5">
+
+                                <TextBlock Text="+"
+                                           VerticalAlignment="Bottom"
+                                           HorizontalAlignment="Center"
+                                           FontSize="35"
+                                           Foreground="White" />
+                            </Border>
+                        </Border>
+
+                        <TextBlock Grid.Column="3"
+                                   Text="Add organization"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold" 
+                                   Foreground="#FF6B6B6B"/>
+
+                    </Grid>
+
+                </Button>
+
+                <ListView ItemsSource="{Binding DataContext.Organizations, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectionMode="Single"
+                          Grid.Row="1"
+                          Padding="-2 0 0 0" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          BorderBrush="{x:Null}"
+                          Background="{x:Null}">
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+
+                            <Setter Property="HorizontalContentAlignment" 
+                                    Value="Stretch" />
+
+                            <Setter Property="Background" 
+                                    Value="Transparent" />
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Background="White"
+                                  Height="auto">
+
+                                <Grid.ColumnDefinitions>
+                                    <!-- <ColumnDefinition Width="5" /> -->
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- <Border Background="Red" Width="5" /> -->
+
+                                <Border Background="#02949d" 
+                                        Width="40"
+                                        Height="40"
+                                        CornerRadius="5"
+                                        Grid.Column="0" 
+                                        Padding="0 8 0 8" 
+                                        Margin="0 10 0 10"
+                                        VerticalAlignment="Top">
+
+                                    <Grid>
+                                        <TextBlock Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToInitialsConverter}}"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0 3 0 0"
+                                                   HorizontalAlignment="Center"
+                                                   FontSize="20"
+                                                   Foreground="White" />
+
+                                        <ComboBox Visibility="Collapsed"
+                                                  Tag="{Binding Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+                                </Border>
+
+                                <Grid Grid.Column="1">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="8" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="1" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ListView Grid.Row="3" 
+                                              Tag="{Binding}"
+                                              ItemsSource="{Binding Groups}"
+                                              BorderBrush="{x:Null}"
+                                              Background="{x:Null}"
+                                              Cursor="Hand">
+                                        <!--SelectedItem="{Binding DataContext.SelectedGroup, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Mode=TwoWay}">-->
+
+                                        <ListView.SelectedItem>
+                                            <MultiBinding Converter="{StaticResource SelectedItemConverter}">
+
+                                                <Binding Path="DataContext.SelectedGroup" 
+                                                         RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"
+                                                         Mode="TwoWay"/>
+
+                                                <Binding Path="Tag"
+                                                         RelativeSource="{RelativeSource Self}"
+                                                         Mode="OneWay"/>
+
+                                            </MultiBinding>
+                                        </ListView.SelectedItem>
+
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged" >
+                                                <i:InvokeCommandAction Command="{Binding DataContext.GroupChangedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                                       CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+
+                                                <Setter Property="Height" 
+                                                            Value="18" />
+
+                                                <Setter Property="VerticalContentAlignment" 
+                                                            Value="Center" />
+
+                                                <Setter Property="Background"
+                                                            Value="Transparent" />
+
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                            <ContentPresenter />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <TextBlock VerticalAlignment="Center"
+                                                               Tag="{Binding Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                               Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" >
+
+                                                    <TextBlock.FontWeight>
+                                                        <MultiBinding Converter="{StaticResource SelectedGroupHighlightConverter}">
+
+                                                            <Binding Path="DataContext.SelectedGroup" 
+                                                                         RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
+
+                                                            <Binding />
+
+                                                        </MultiBinding>
+                                                    </TextBlock.FontWeight>
+
+                                                </TextBlock>
+
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+
+                                    </ListView>
+
+                                    <Grid Grid.Row="1">
+                                        <TextBlock Text="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                   FontSize="17" 
+                                                   FontWeight="Bold"
+                                                   Foreground="#02949d" />
+                                    </Grid>
+
+                                    <Grid Grid.Row="1" 
+                                          Grid.Column="2"
+                                          HorizontalAlignment="Right">
+
+                                        <Button Background="Transparent" 
+                                                BorderThickness="0"
+                                                Width="20"
+                                                Command="{Binding DataContext.EditOrganizationCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                CommandParameter="{Binding Id}">
+
+                                            <Image Source="/Chatter;component/Images/Icons/setup.png" 
+                                                   Stretch="Uniform" 
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   Height="15" 
+                                                   Width="15" />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  Background="White"
+                  Visibility="{Binding ShowUserList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                
+                <ListView Grid.Row="3" 
+                          ItemsSource="{Binding UserList}"
+                          BorderBrush="{x:Null}"
+                          Background="{x:Null}"
+                          Cursor="Hand"
+                          SelectedItem="{Binding DataContext.SelectedUser, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Mode=TwoWay}">
+                    
+                    <!--SelectedItem="{Binding DataContext.SelectedGroup, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Mode=TwoWay}">-->
+                    
+                    <!--<ListView.SelectedItem>
+                        <MultiBinding Converter="{StaticResource SelectedItemConverter}">
+                            
+                            <Binding Path="DataContext.SelectedGroup" 
+                                     RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"
+                                     Mode="TwoWay"/>
+                            
+                            <Binding Path="Tag"
+                                     RelativeSource="{RelativeSource Self}"
+                                     Mode="OneWay"/>
+                            
+                        </MultiBinding>
+                    </ListView.SelectedItem>-->
+                    
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged" >
+                            <i:InvokeCommandAction Command="{Binding DataContext.SelectedUserChangedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                   CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+
+                            <Setter Property="VerticalContentAlignment" 
+                                    Value="Center" />
+                            
+                            <Setter Property="Background"
+                                    Value="Transparent" />
+                            
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Controls:UserList Data="{Binding Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>                    
+                </ListView>                
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

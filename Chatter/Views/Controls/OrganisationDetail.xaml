@@ -1,0 +1,520 @@
+﻿<UserControl x:Class="Chatter.Views.Controls.OrganisationDetail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chatter.Views.Controls"
+             DataContext="{Binding Source={StaticResource VMLocator}, Path=OrganizationDetailVM}"
+             mc:Ignorable="d">
+
+
+    <Grid Background="#F1F1F2">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- List groups -->
+
+        <Grid Grid.Column="5"
+              Grid.Row="3">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Row="1"
+                    Height="30"
+                    Padding="5 0 5 0"
+                    Background="#FFB3D0D6"
+                    BorderBrush="Transparent"
+                    IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Content="Edit group"
+                    Command="{Binding EditGroupCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=GroupList}"
+                    Visibility="{Binding DeleteVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
+            <Button Grid.Row="3"
+                    Height="30"
+                    Padding="5 0 5 0"
+                    Background="#FFB3D0D6"
+                    BorderBrush="Transparent"
+                    IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Content="Remove group"
+                    Command="{Binding RemoveGroupCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=GroupList}"
+                    Visibility="{Binding DeleteVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
+            <Button Grid.Row="5"
+                    Padding="5 0 5 0"
+                    Height="30"
+                    Background="#A1D6E2"
+                    BorderBrush="Transparent"
+                    IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Content="+ Add new group"
+                    Visibility="{Binding DeleteVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Command="{Binding AddGroupCommand}"/>
+            
+            
+            <ListView Grid.Row="1" 
+                      Grid.Column="1"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Background="Transparent"
+                      Visibility="Collapsed"
+                      BorderBrush="Transparent"
+                      Margin="-15 -3 0 0">
+                
+                <Button Width="30" 
+                            Height="30"
+                            Background="Transparent"
+                            BorderBrush="Transparent">
+
+                        <Image Source="/Chatter;component/Images/Icons/delete.png" 
+                                       Stretch="Uniform" 
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Height="15" 
+                                       Width="15" />
+                    </Button>
+
+                    <Button Width="30" 
+                            Height="30"
+                            Background="Transparent"
+                            BorderBrush="Transparent">
+
+                        <Image Source="/Chatter;component/Images/Icons/delete.png" 
+                                       Stretch="Uniform" 
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Height="15" 
+                                       Width="15" />
+                    </Button>
+
+                    <Button Width="30" 
+                            Height="30"
+                            Background="Transparent"
+                            BorderBrush="Transparent">
+
+                        <Image Source="/Chatter;component/Images/Icons/delete.png" 
+                                       Stretch="Uniform" 
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Height="15" 
+                                       Width="15" />
+                    </Button>
+
+                    <Button Width="30" 
+                            Height="30"
+                            Background="Transparent"
+                            BorderBrush="Transparent">
+
+                        <Image Source="/Chatter;component/Images/Icons/delete.png" 
+                                       Stretch="Uniform" 
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Height="15" 
+                                       Width="15" />
+                    </Button>
+
+                </ListView>
+            </Grid>
+
+            <Border Background="#02949d" 
+                    CornerRadius="5" 
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Height="35"
+                    Width="35"
+                    VerticalAlignment="Center">
+
+                <TextBlock Text="{Binding OrganizationDetail.Name, Converter={StaticResource StringToInitialsConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="13"
+                           Foreground="White" />
+            </Border>
+
+            <Grid Grid.Column="3"
+                   Grid.Row="1"
+                   VerticalAlignment="Center">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           FontSize="20"
+                           Text="{Binding OrganizationDetail.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           Margin="0 0 5 0"/>
+
+            </Grid>
+
+        <Grid Grid.Column="3"
+              Grid.Row="2">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1" >
+
+                <Rectangle Fill="#FFF4F4F5"
+                               Height="1" 
+                               Stroke="Black" 
+                               VerticalAlignment="Center" />
+            </Grid>
+
+            <Grid Grid.Row="0"
+                  HorizontalAlignment="Left" 
+                  Width="552">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
+
+
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="1" 
+                           Grid.Column="0"
+                           Content="Name Organization:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Width="120" 
+                           Height="30"
+                           VerticalContentAlignment="Center"/>
+
+                <Label Grid.Row="1" 
+                           Grid.Column="4"
+                           Content="Groups:"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Width="auto" 
+                           Height="30"
+                           VerticalContentAlignment="Center"
+                            Visibility="{Binding DeleteVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <ListView Grid.Row="1" 
+                          Grid.RowSpan="6"
+                          x:Name="GroupList"
+                          Grid.Column="6"
+                          VerticalAlignment="Stretch"
+                          Background="Transparent"
+                          BorderBrush="Transparent"
+                          Margin="0 3 0 0"
+                          ItemsSource="{Binding OrganizationDetail.Groups, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                          Visibility="{Binding DeleteVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <TextBlock Text="{Binding Name}"
+                                       Margin="2"/>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+
+                            <Setter Property="VerticalContentAlignment" 
+                                    Value="Center" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                </ListView>
+
+                <Label Grid.Row="3" 
+                           Grid.Column="0"
+                           Content="Organization BIO:"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           Width="120" 
+                           Height="30"
+                           VerticalContentAlignment="Center"/>
+
+                <TextBox Grid.Row="1"
+                             HorizontalAlignment="Left"
+                             Grid.Column="2"
+                             TextWrapping="Wrap"
+                             IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                             Height="30" 
+                             Width="230"       
+                             TextAlignment="Left"
+                             Text="{Binding OrganizationDetail.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
+                             VerticalScrollBarVisibility="Auto"
+                             VerticalContentAlignment="Center"/>
+
+                <TextBox Grid.Row="3"
+                             Grid.Column="2"
+                             TextWrapping="Wrap"
+                             Height="80" 
+                             Width="230"       
+                             IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                             TextAlignment="Left"
+                             Text="{Binding OrganizationDetail.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
+                             VerticalScrollBarVisibility="Auto"/>
+
+                <Button Content="{Binding AddEditText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Grid.Column="2"
+                            Grid.Row="5"
+                            BorderThickness="0"
+                            HorizontalAlignment="left"
+                            VerticalAlignment="Center" 
+                             IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Width="105"
+                            Background="#A1D6E2"
+                            Height="30"
+                            Command="{Binding AddCommand}"/>
+
+                <Button Content="Delete Organization"
+                            Grid.Column="2"
+                            Grid.Row="5"
+                            BorderThickness="0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" 
+                             IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Width="115"
+                            Background="#FF377583"
+                            Height="30"
+                            Command="{Binding DeleteCommand}"
+                            Visibility="{Binding DeleteVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                <Grid Grid.Row="7" 
+                          Grid.Column="2"
+                          Visibility="{Binding ShowError, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                    <TextBlock Text="{Binding ErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   FontSize="12" 
+                                   Foreground="Red"
+                                   Grid.Column="1" 
+                                   FontWeight="Bold"/>
+                </Grid>
+
+            </Grid>
+
+            <Grid Grid.Column="0"
+                  Grid.Row="2">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="1" 
+                           Content="Users:"
+                           VerticalAlignment="Top"   
+                           HorizontalAlignment="Left"
+                           Margin="3 0 0 0"
+                           Width="120" 
+                           Height="30"
+                           VerticalContentAlignment="Center"/>
+
+                <ListView Grid.Row="2" 
+                              x:Name="FullUsers"
+                              Background="Transparent"
+                              BorderBrush="Transparent"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ItemsSource="{Binding UserList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <local:UserList Data="{Binding}"/>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+
+                <StackPanel Grid.Column="1" 
+                                Grid.Row="2" 
+                                VerticalAlignment="Center">
+
+                    <Button Width="25" 
+                                Height="25"
+                             IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Command="{Binding AddUserCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=FullUsers}">
+
+                        <Image Source="/Chatter;component/Images/Icons/send.png" 
+                                   Stretch="Uniform" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Height="15" 
+                                   Width="15" />
+
+                    </Button>
+
+                    <Button Grid.Column="1" 
+                                Grid.Row="2" 
+                                Width="25" 
+                             IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Height="25"
+                                Command="{Binding RemoveUserCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=OrgUsers}">
+
+                        <Image Source="/Chatter;component/Images/Icons/back.png" 
+                                   Stretch="Uniform" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Height="18" 
+                                   Width="18" />
+
+                    </Button>
+
+                </StackPanel>
+
+
+                <Label Grid.Row="1"
+                           Grid.Column="2"
+                           Content="Organization users:"
+                           VerticalAlignment="Top"   
+                           HorizontalAlignment="Left"
+                           Margin="3 0 0 0"
+                           Width="120" 
+                           Height="30"
+                           VerticalContentAlignment="Center"/>
+
+                <ListView Grid.Row="2" 
+                              Grid.Column="2"
+                              x:Name="OrgUsers"
+                              Background="Transparent"
+                              ItemsSource="{Binding OrganizationDetail.Users, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              BorderBrush="Transparent">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <local:UserList Data="{Binding}"/>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+
+                <StackPanel Grid.Column="3" 
+                                Grid.Row="2" 
+                                VerticalAlignment="Center">
+
+                    <Button Width="25" 
+                                Height="25"
+                             IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Command="{Binding AddAdminCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=OrgUsers}">
+
+                        <Image Source="/Chatter;component/Images/Icons/send.png" 
+                                   Stretch="Uniform" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Height="15" 
+                                   Width="15" />
+
+                    </Button>
+
+                    <Button Grid.Column="1" 
+                                Grid.Row="2" 
+                                Width="25" 
+                                Height="25"
+                             IsEnabled="{Binding EditEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Command="{Binding RemoveAdminCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=OrgAdmins}">
+
+                        <Image Source="/Chatter;component/Images/Icons/back.png" 
+                                   Stretch="Uniform" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Height="18" 
+                                   Width="18" />
+
+                    </Button>
+
+                </StackPanel>
+
+                <Label Grid.Row="1"
+                           Grid.Column="4"
+                           Content="Administrators:"
+                           VerticalAlignment="Top"   
+                           HorizontalAlignment="Left"
+                           Margin="3 0 0 0"
+                           Width="120" 
+                           Height="30"
+                           VerticalContentAlignment="Center"/>
+
+                <ListView Grid.Row="2" 
+                              Grid.Column="4"
+                              x:Name="OrgAdmins"
+                              Background="Transparent"
+                              ItemsSource="{Binding OrganizationDetail.Admins, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              BorderBrush="Transparent">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <local:UserList Data="{Binding}"/>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
