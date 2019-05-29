@@ -258,9 +258,9 @@ namespace Chatter.DAL.Migrations
 
                     b.Property<DateTime>("RegistrationDate");
 
-                    b.Property<string>("Salt");
+                    b.Property<byte[]>("Salt");
 
-                    b.Property<string>("Username");
+                    b.Property<byte[]>("Username");
 
                     b.HasKey("Id");
 
