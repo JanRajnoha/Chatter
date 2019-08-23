@@ -1,5 +1,6 @@
 # Chattter
-Chat application for C# Course.
+
+Chat application created as school project in C# Course.
 
 **Technology:** WPF
 
